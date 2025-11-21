@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Устанавливаю заголовок страницы -->
+    <title>Архив статей</title>
+</head>
+<body>
+    <!-- Блок для заголовка страницы -->
+    <div class="header">
+        <!-- Подключаю CSS файл -->
+        <!-- STATIC_URL - переменная из settings.py с путем к статике -->
+        <link rel="stylesheet" href="{{ STATIC_URL }}/static/index.css">
+        <!-- Добавляю изображение логотипа -->
+        <img src="{{ STATIC_URL }}/static/logo.png" alt="Логотип сайта" />
+    </div>
+    
+    <!-- Блок для списка статей -->
+    <div class="archive">
+        <!-- Использую шаблонный тег for для перебора статей -->
+        <!-- posts - переменная со списком статей из контекста -->
+        <!-- Синтаксис похож на Python, но с тегами Django -->
+        {% for post in posts %}
+        <!-- Контейнер для одной статьи -->
+        <div class="one-post">
+            <!-- Заголовок статьи -->
+            <!-- post.title - обращение к полю title объекта post -->
+            <h2 class="post-title">{{ post.title }}</h2>
+            
+            <!-- Блок с информацией о статье -->
+            <div class="article-info">
+                <!-- Имя автора статьи -->
+                <!-- post.author.username - обращение через связь ForeignKey -->
+                <div class="article-author">{{ post.author.username }}</div>
+                
+                <!-- Дата создания статьи -->
+                <div class="article-created-date">{{ post.created_date }}</div>
+            </div>
+            
+            <!-- Текст статьи (отрывок) -->
+            <!-- post.get_excerpt - вызов метода модели -->
+            <p class="article-text">{{ post.get_excerpt }}</p>
+        </div>
+        <!-- Конец цикла for -->
+        <!-- endfor обязателен для закрытия цикла -->
+        {% endfor %}
+    </div>
+</body>
+</html>
